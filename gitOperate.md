@@ -39,7 +39,7 @@ git commit -m " **** "
 ```
 提交到远程分支
 ```
-git push mrigin master
+git push origin master
 ```
 
 ##### 先初始化本地再推
