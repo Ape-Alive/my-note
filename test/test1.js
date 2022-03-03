@@ -52,13 +52,25 @@
 // }
 // let result=flatten(ary)
 // console.log(result)
-const ary=[1,[3,4,5,[6,7]],8,[9],10]
+// const ary=[1,[3,4,5,[6,7]],8,[9],10]
 
-function flatten(ary){
-    while(ary.some(item=>Array.isArray(item))){
-        ary=[].concat(...ary)
-    }
-    return ary
+// function flatten(ary){
+//     while(ary.some(item=>Array.isArray(item))){
+//         ary=[].concat(...ary)
+//     }
+//     return ary
+// }
+// let result=flatten(ary)
+// console.log(result)
+// console.log(/java/i.test('JavaScript'))  
+
+function fn(manySteps) {
+  if (manySteps <= 2) {
+       return manySteps;
+   } else {
+           return fn(manySteps - 1) + fn(manySteps - 2);
+          }
 }
-let result=flatten(ary)
-console.log(result)
+let result = fn(9);
+console.log(result);
+                         

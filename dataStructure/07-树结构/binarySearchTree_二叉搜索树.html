@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二叉搜索树</title>
+</head>
+<body>
+  <script>
+    function binarySearchTree(){
+      function Node(key){
+        this.key=key
+        this.left=null
+        this.right-null
+      }
+      //属性
+      this.root=null
+      //方法
+      //插入数据
+      binarySearchTree.prototype.insert=function(key){
+        //1,根据key创建根节点
+        var newNode=new Node(key)
+        //2,判断根节点是否有值
+        if(this.root===null){
+          this.root=newNode
+        }else{
+          this.insertNode(this.root,newNode)
+        }
+
+      }
+
+      binarySearchTree.prototype.insertNode=function(node,newNode){
+        if(newNode.key<node.key){//向左查找
+          if(node.left==null){
+            node.left=newNode
+          }else{
+            this.insertNode(node.left,newNode)
+          }
+        }else{//向右查找
+          if(node.right==null){
+           node.right=newNode
+          }else{
+            this.insertNode(node.right,newNode)
+          }
+        }
+      }
+      //遍历
+      //先序遍历
+      binarySearchTree.prototype.proOrderTraversal=function(handler){
+         this.proOrderTraversalNode(this.root,handler)
+      }
+
+      binarySearchTree.prototype.proOrderTraversalNode=function(node,handler){
+        if(node!=null){
+          //处理经过的节点
+          handler(node.key)
+          //处理经过节点的左子节点
+          this.proOrderTraversalNode(node.left,handler)
+          //处理经过的节点的右子节点
+          this.proOrderTraversalNode(node.right,handler)
+
+        }
+      }
+      //中序遍历
+      binarySearchTree.prototype.midOrderTraversal=function(handler,handler){
+        this.midOrderTraversalNode(this.root,handler)
+      }
+      binarySearchTree.prototype.midOrderTraversalNode=function(node,handler){
+        if(node!=null){
+          //处理经过节点的左节点
+          this.midOrderTraversalNode(node.left,handler)
+          //处理经过的节点
+          handler(node.key)
+          //处理经过节点的右节点
+          this.midOrderTraversalNode(node.right,handler)
+        }
+      }
+      //后序遍历
+      binarySearchTree.prototype.postOrderTraversal=function(handler){
+            this.postOrderTraversalNode(this.root,handler)
+      }
+      binarySearchTree.prototype.postOrderTraversalNode=function(node,handler){
+        if(node!=null){
+          this.postOrderTraversalNode(node.left,handler)
+        this.postOrderTraversalNode(node.right,handler)
+        handler(node.key)
+        }
+       
+      }
+      //层序遍历
+      binarySearchTree.prototype.levelOrderTraversal=function(){
+      return  this.levelOrderTraversalNode(this.root) 
+      }
+      binarySearchTree.prototype.levelOrderTraversalNode=function(root){
+      const ret = [];
+      if (!root) {
+        return ret;
+      }
+
+    const q = [];
+    q.push(root);
+    while (q.length !== 0) {
+        const currentLevelSize = q.length;
+        ret.push([]);
+        for (let i = 1; i <= currentLevelSize; ++i) {
+            const node = q.shift();
+            ret[ret.length - 1].push(node.key);
+            if (node.left) q.push(node.left);
+            if (node.right) q.push(node.right);
+        }
+    }
+    // console.log(ret);
+        let resultData=ret.join().split(',').map(item=>{
+          return Number(item)
+        })
+      
+    return resultData;
+      }
+
+      //查询最大值
+      binarySearchTree.prototype.max=function(){
+        var node=this.root
+        while(node.right!=null){
+          node=node.right
+        }
+        return node.key
+      }
+      //查询最小值
+      binarySearchTree.prototype.min=function(){
+        var node=this.root
+        while(node.left!=null){
+          node=node.left
+        }
+        return node.key
+      }
+
+      //返回二叉树的深度
+      // binarySearchTree.prototype.deepTree=function(){
+      //   let leftDeep=this.deepTreeLeft()
+      //   let rightDeep=this.deepTreeRight()
+      //   return leftDeep>rightDeep?leftDeep:rightDeep
+      // }
+      // binarySearchTree.prototype.deepTreeLeft=function(){
+      //    var node=this.root
+      //    var leftDeep=1
+      //    while(node.left!=null){
+      //      node=node.left
+      //      leftDeep++
+      //    }
+      //    return leftDeep
+      // }
+      // binarySearchTree.prototype.deepTreeRight=function(){
+      //   var node=this.root
+      //    var rightDeep=1
+      //    while(node.right!=null){
+      //      node=node.right
+      //      rightDeep++
+      //    }
+      //    return rightDeep
+      // }
+      binarySearchTree.prototype.deepTree=function(){
+        let node=this.root
+        return this.maxDeep(node)
+        }
+      binarySearchTree.prototype.maxDeep=function(node){
+        if(!node) {
+         return 0
+         }
+        return Math.max(this.maxDeep(node.left),this.maxDeep(node.right))+1
+      }
+      
+      //搜索特定值
+      // binarySearchTree.prototype.search=function(key){
+      //   var node=this.root
+      //   while(node!=null){
+      //     if(node.key<key){
+      //       node=node.right
+      //     }else if(node.key>key){
+      //       node=node.left
+      //     }else{
+      //       return turn
+      //     }
+      //   }
+      //   return false
+      // }
+      binarySearchTree.prototype.search=function(key){
+       return this.searchNode(this.root,key)
+      }
+      binarySearchTree.prototype.searchNode=function(node,key){
+        //如果传入的node为null 那么就退出递归
+       if(node===null){
+         return false
+       }
+        //判断node节点的值和传入的key做比较
+        if(node.key<key){
+          return this.searchNode(node.right,key)
+        }else if(node.key>key){
+          return this.searchNode(node.left,key)
+        }else{
+          return true
+        }
+      }
+      // remove
+      // search
+      // inOrder
+    }
+    //测试代码
+    var testNode=new binarySearchTree()
+    testNode.insert(9)
+    testNode.insert(13)
+    testNode.insert(5)
+    testNode.insert(8)
+    testNode.insert(2)
+    testNode.insert(16)
+    // testNode.insert(11)
+    // testNode.insert(4)
+    // testNode.insert(23)
+    // testNode.insert(1)
+   
+    var resultData=''
+    testNode.postOrderTraversal(function(key){
+        resultData+=key+' '
+    })
+ 
+  //   console.log(resultData);
+    
+  //  console.log(testNode.max())
+  //  console.log(testNode.min());
+console.log(testNode.deepTree());
+console.log(testNode.levelOrderTraversal());
+  </script>
+</body>
+</html>

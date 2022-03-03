@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+</head>
+<body>
+  <div id='text'></div>
+  <script>
+  const obj={
+    name:'小雷',
+    age:46,
+    friends:{name1:'李红',name2:'江城',name3:'小明'},
+    colors:['orange','green','blue']
+  }
+
+  function deepClone(obj){
+    if(typeof obj!='object'||obj==null){
+      return obj
+    }
+    let result
+    if(Array.isArray(obj)){
+      result=[]
+    }else{
+       result={}
+    }
+
+    for(let key in obj){
+      if(obj.hasOwnProperty){
+        result[key]=deepClone(obj[key])
+
+      }
+    }
+    return result
+  }
+  const newObj=deepClone(obj)
+  newObj.friends.name1='楚风'
+  console.log('obj',obj);
+  console.log('newObj',newObj);
+  </script>
+</body>
+</html>
+
+
